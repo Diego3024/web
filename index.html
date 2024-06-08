@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Tipos</title>
+    <title>Tipos y Enfoques</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,31 +39,39 @@
 </head>
 <body>
     <div class="container">
-        <h1>Consulta de Tipos de Investigación</h1>
-        <p>Ingresa una palabra clave (por ejemplo: "investigación" o "metodologías"):</p>
+        <h1>Consulta de Tipos y/o Enfoques Metodológicos utilizados en la Investigación</h1>
+        <p>Ingresa una palabra clave (por ejemplo: "tipos" para ver los tipos de investigación o "enfoques" para ver los enfoques metodológicos utilizados en la investigación):</p>
         <input type="text" id="keyword" placeholder="Escribe aquí...">
         <button id="buscar">Buscar</button>
         <div id="resultado"></div>
     </div>
-
 
     <script>
         function quitarAcentos(texto) {
             return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
 
+        function speak(text) {
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = text;
+            window.speechSynthesis.speak(speech);
+        }
 
         function buscar() {
             const keyword = quitarAcentos(document.getElementById("keyword").value.toLowerCase());
             let resultado = "";
 
 
-            if (keyword.includes("tipos de investigacion")) {
+            if (keyword.includes("tipos")) {
                 resultado = "¿Quieres ver todos los tipos de investigación o uno específico?";
-                resultado += "<br><input type='text' id='opcion' placeholder='Ingresa tipo 1, tipo 2 o todos'>";
+                resultado += "<br><input type='text' id='opcion' placeholder='Ingresa tipo 1, tipo 2, ...,tipo 12 o todos...'>";
                 resultado += "<button id='mostrar-tipo'>Mostrar</button>";
+            }  else if (keyword.includes("enfoques")) {
+                resultado = "¿Quieres ver todos los enfoques metodológicos utilizados en la investigación o uno específico?";
+                resultado += "<br><input type='text' id='metodologia' placeholder='Ingresa enfoque 1, enfoque 2, enfoque 3 o todos...'>";
+                resultado += "<button id='mostrar-metodologia'>Mostrar</button>";
             } else {
-                resultado = "Palabra clave no reconocida. Intenta con 'investigación' o 'metodologías'.";
+                resultado = "Palabra clave no reconocida. Intenta con 'tipos' o 'enfoques'.";
             }
 
 
@@ -93,7 +101,7 @@
                     break;
                 case "tipo 3":
                     tipoInvestigacion = `
-                    strong>Investigación Experimental:</strong>Se caracteriza por la manipulación controlada de variables para establecer relaciones de causa y efecto. Se lleva a cabo en condiciones controladas para observar los efectos de ciertas intervenciones.<br>
+                    <strong>Investigación Experimental:</strong>Se caracteriza por la manipulación controlada de variables para establecer relaciones de causa y efecto. Se lleva a cabo en condiciones controladas para observar los efectos de ciertas intervenciones.<br>
                         <em>Ejemplo:</em> Experimento para determinar la eficacia de un nuevo medicamento.
 
 
@@ -174,49 +182,128 @@
                 case "todos":
                     tipoInvestigacion = `
                 <strong>Tipos de Investigación:</strong><br>
+                <br>
                 <strong>1.Investigación Histórica:</strong><br>
                         Se enfoca en estudiar y comprender eventos del pasado. Utiliza fuentes primarias y secundarias para reconstruir hechos históricos de manera objetiva.<br>
                         <em>Ejemplo:</em><br>
                         Estudio sobre la caída del Imperio Romano.<br>
-                        <strong>2.Investigación Descriptiva:</strong> Observa y describe características de fenómenos actuales sin modificarlos. Se centra en “el qué”, “el cómo” y “el cuándo” de las situaciones o eventos.<br>
-                        <em>Ejemplo:</em> Encuesta sobre hábitos de consumo en adolescentes.<br>
-                        <strong>3.Investigación Experimental:</strong>Se caracteriza por la manipulación controlada de variables para establecer relaciones de causa y efecto. Se lleva a cabo en condiciones controladas para observar los efectos de ciertas intervenciones.<br>
-                        <em>Ejemplo:</em> Experimento para determinar la eficacia de un nuevo medicamento.<br>
-                        <strong>4.Investigación Correlacional:</strong>En este tipo de investigación, se establece una correlación entre dos variables sin manipularlas experimentalmente. Se mide la relación estadística entre ellas.<br>
-                        <em>Ejemplo:</em> Estudio para conocer si existe una correlación entre el nivel de ingresos económicos de las familias y el número de hijos que tienen.<br>
-                        <strong>5.Estudio de Caso:</strong> Se profundiza en un caso particular o situación específica. Se recopila información detallada para comprender en profundidad un fenómeno. <br>
-                        <em>Ejemplo:</em> Análisis de un paciente con una enfermedad rara para comprender su evolución y tratamiento. <br>
-                        <strong>6.Investigación Ex Post Facto :</strong> Se estudian relaciones entre variables preexistentes en las personas o sus determinantes. No se manipulan intencionalmente las variables. <br>
-                        <em>Ejemplo:</em>  Estudio para evaluar el efecto beneficioso de la nicotina en la realización de tareas cognitivas. <br>
-                        <strong>7.Investigación Participativa:</strong>Implica la colaboración activa de los participantes en la investigación. Se busca empoderar a las comunidades y generar cambios sociales. <br>
-                        <em>Ejemplo:</em> Proyecto de investigación en el que los miembros de una comunidad indígena participan activamente en la identificación de problemas y soluciones. <br>
-                        <strong>8.Investigación Comparada:</strong> Compara diferentes grupos, culturas o contextos para identificar similitudes y diferencias.<br>
-                        <em>Ejemplo:</em> Comparación de sistemas educativos en diferentes países para analizar sus fortalezas y debilidades. <br>
-                        <strong>9.Investigación de Mercado:</strong>Se enfoca en comprender las necesidades y preferencias de los consumidores para tomar decisiones comerciales. <br>
-                        <em>Ejemplo:</em> Encuesta para evaluar la aceptación de un nuevo producto en el mercado. <br>
-                        <strong>10.Investigación Evaluativa:</strong>Evalúa programas, políticas o intervenciones para determinar su eficacia y eficiencia. <br>
-                        <em>Ejemplo:</em>  Evaluación de un programa de capacitación laboral para medir su impacto en la empleabilidad de los participantes. <br>
-                        <strong>11.Investigación Cualitativa:</strong> Se centra en entender fenómenos según la perspectiva de los participantes y su contexto social. Utiliza métodos como entrevistas, grupos focales y observación. <br>
-                        <em>Ejemplo:</em> Estudio etnográfico de una comunidad indígena para comprender sus tradiciones y forma de vida. <br>
-                        <strong>12.Investigación Etnográfica:</strong> Es un tipo de investigación cualitativa que implica una inmersión profunda en una comunidad o cultura para comprender sus prácticas, creencias, valores y dinámicas sociales. <br>
-                        <em>Ejemplo:</em>Convivencia con una tribu amazónica para documentar sus prácticas de caza y rituales. <br>
+                        <strong>2.Investigación Descriptiva:</strong><br>
+                        Observa y describe características de fenómenos actuales sin modificarlos. Se centra en “el qué”, “el cómo” y “el cuándo” de las situaciones o eventos.<br>
+                        <em>Ejemplo:</em><br> 
+                        Encuesta sobre hábitos de consumo en adolescentes.<br>
+                        <strong>3.Investigación Experimental:</strong><br>
+                        Se caracteriza por la manipulación controlada de variables para establecer relaciones de causa y efecto. Se lleva a cabo en condiciones controladas para observar los efectos de ciertas intervenciones.<br>
+                        <em>Ejemplo:</em><br> 
+                        Experimento para determinar la eficacia de un nuevo medicamento.<br>
+                        <strong>4.Investigación Correlacional:</strong><br>
+                        En este tipo de investigación, se establece una correlación entre dos variables sin manipularlas experimentalmente. Se mide la relación estadística entre ellas.<br>
+                        <em>Ejemplo:</em><br>
+                        Estudio para conocer si existe una correlación entre el nivel de ingresos económicos de las familias y el número de hijos que tienen.<br>
+                        <strong>5.Estudio de Caso:</strong><br> 
+                        Se profundiza en un caso particular o situación específica. Se recopila información detallada para comprender en profundidad un fenómeno. <br>
+                        <em>Ejemplo:</em><br> 
+                        Análisis de un paciente con una enfermedad rara para comprender su evolución y tratamiento. <br>
+                        <strong>6.Investigación Ex Post Facto :</strong><br> 
+                        Se estudian relaciones entre variables preexistentes en las personas o sus determinantes. No se manipulan intencionalmente las variables. <br>
+                        <em>Ejemplo:</em><br>  
+                        Estudio para evaluar el efecto beneficioso de la nicotina en la realización de tareas cognitivas. <br>
+                        <strong>7.Investigación Participativa:</strong><br>
+                        Implica la colaboración activa de los participantes en la investigación. Se busca empoderar a las comunidades y generar cambios sociales. <br>
+                        <em>Ejemplo:</em><br> 
+                        Proyecto de investigación en el que los miembros de una comunidad indígena participan activamente en la identificación de problemas y soluciones. <br>
+                        <strong>8.Investigación Comparada:</strong><br> 
+                        Compara diferentes grupos, culturas o contextos para identificar similitudes y diferencias.<br>
+                        <em>Ejemplo:</em><br> 
+                        Comparación de sistemas educativos en diferentes países para analizar sus fortalezas y debilidades. <br>
+                        <strong>9.Investigación de Mercado:</strong><br>
+                        Se enfoca en comprender las necesidades y preferencias de los consumidores para tomar decisiones comerciales. <br>
+                        <em>Ejemplo:</em><br> 
+                        Encuesta para evaluar la aceptación de un nuevo producto en el mercado. <br>
+                        <strong>10.Investigación Evaluativa:</strong><br>
+                        Evalúa programas, políticas o intervenciones para determinar su eficacia y eficiencia. <br>
+                        <em>Ejemplo:</em><br>
+                        Evaluación de un programa de capacitación laboral para medir su impacto en la empleabilidad de los participantes. <br>
+                        <strong>11.Investigación Cualitativa:</strong><br>
+                        Se centra en entender fenómenos según la perspectiva de los participantes y su contexto social. Utiliza métodos como entrevistas, grupos focales y observación. <br>
+                        <em>Ejemplo:</em><br> 
+                        Estudio etnográfico de una comunidad indígena para comprender sus tradiciones y forma de vida. <br>
+                        <strong>12.Investigación Etnográfica:</strong><br> 
+                        Es un tipo de investigación cualitativa que implica una inmersión profunda en una comunidad o cultura para comprender sus prácticas, creencias, valores y dinámicas sociales. <br>
+                        <em>Ejemplo:</em><br>
+                        Convivencia con una tribu amazónica para documentar sus prácticas de caza y rituales. <br>
             `
                     break;
                 default:
-                    tipoInvestigacion = "Opción no válida. Ingresa 'tipo 1', 'tipo 2' o 'todos'.";
+                    tipoInvestigacion = "Opción no válida. Ingresa 'tipo 1', 'tipo 2', ...,'tipo 12' o 'todos'.";
             }
 
 
             document.getElementById("resultado").innerHTML = tipoInvestigacion;
+            speak(tipoInvestigacion);
         }
+        // Agregamos la función para mostrar la metodología
+        function mostrarMetodologiaElegida() {
+                    const metodologia = document.getElementById("metodologia").value.toLowerCase().trim();
+                    let metodologiaInvestigacion= "";
+                    // Aquí puedes manejar la metodología como desees
+                    // Por ejemplo, mostrar una definición de la metodología o realizar una búsqueda específica.
+                    switch(metodologia){
+                        case "enfoque 1" :
+                            metodologiaInvestigacion= `
+                    <strong>Enfoque Cuantitativo:</strong> Utiliza la recolección y el análisis de datos numéricos para probar hipótesis y hacer predicciones. Se basa en la medición objetiva y el análisis estadístico para establecer patrones y generalizar resultados. <br>
+                        <em>Ejemplo:</em>Una encuesta que mide la frecuencia de uso de redes sociales entre adolescentes para establecer correlaciones con su rendimiento académico.
 
 
-        document.getElementById("buscar").addEventListener("click", buscar);
-        document.getElementById("resultado").addEventListener("click", function(e) {
-            if (e.target && e.target.id === "mostrar-tipo") {
-                mostrarTipoElegido();
-            }
-        });
+                   `;break;
+                        case "enfoque 2" :
+                            metodologiaInvestigacion= `
+                    <strong>Enfoque Cualitativo:</strong> Se centra en comprender fenómenos desde una perspectiva subjetiva. Utiliza datos descriptivos, como entrevistas y observaciones, para obtener una comprensión profunda de las experiencias y perspectivas de los participantes. <br>
+                        <em>Ejemplo:</em>Un estudio etnográfico en una comunidad indígena para entender sus prácticas culturales y creencias.
+
+
+                   `;break;
+                        case "enfoque 3" :
+                            metodologiaInvestigacion= `
+                    <strong>Enfoque Mixto:</strong> Combina elementos de los enfoques cuantitativo y cualitativo. Permite una comprensión más completa de la investigación al integrar datos numéricos y descriptivos. <br>
+                        <em>Ejemplo:</em>Una investigación sobre los efectos de un nuevo método educativo que utiliza tanto pruebas estandarizadas (cuantitativas) como entrevistas con estudiantes y profesores (cualitativas).
+
+
+                   `;break;
+                        case "todos" :
+                            metodologiaInvestigacion= `
+                    <strong>Enfoques metodológicos utilizados en la investigación:</strong><br>
+                    <br>
+                    <strong>1.Enfoque Cuantitativo:</strong><br>
+                    Utiliza la recolección y el análisis de datos numéricos para probar hipótesis y hacer predicciones. Se basa en la medición objetiva y el análisis estadístico para establecer patrones y generalizar resultados.<br>
+                    <em>Ejemplo:</em><br>
+                    Una encuesta que mide la frecuencia de uso de redes sociales entre adolescentes para establecer correlaciones con su rendimiento académico.<br>
+                    <strong>2.Enfoque Cualitativo:</strong><br>
+                    Se centra en comprender fenómenos desde una perspectiva subjetiva. Utiliza datos descriptivos, como entrevistas y observaciones, para obtener una comprensión profunda de las experiencias y perspectivas de los participantes.<br>
+                    <em>Ejemplo:</em><br>
+                    Un estudio etnográfico en una comunidad indígena para entender sus prácticas culturales y creencias.<br>
+                    <strong>3.Enfoque Mixto:</strong><br>
+                    Combina elementos de los enfoques cuantitativo y cualitativo. Permite una comprensión más completa de la investigación al integrar datos numéricos y descriptivos.<br>
+                    <em>Ejemplo:</em><br> 
+                    Una investigación sobre los efectos de un nuevo método educativo que utiliza tanto pruebas estandarizadas (cuantitativas) como entrevistas con estudiantes y profesores (cualitativas).<br>
+                        
+                   `;break;
+                   default:
+                    tipoInvestigacion = "Opción no válida. Ingresa 'enfoque 1', 'enfoque 2', 'enfoque 3' o 'todos'.";
+                    }
+                    document.getElementById("resultado").innerHTML = metodologiaInvestigacion;
+                    speak(metodologiaInvestigacion);
+                }
+
+
+                document.getElementById("buscar").addEventListener("click", buscar);
+                // Añadimos un evento click al botón para mostrar la metodología
+                document.getElementById("resultado").addEventListener("click", function(e) {
+                    if (e.target && e.target.id === "mostrar-tipo") {
+                        mostrarTipoElegido();
+                    } else if (e.target && e.target.id === "mostrar-metodologia") {
+                        mostrarMetodologiaElegida();
+                    }
+                });
     </script>
 </body>
 </html>
